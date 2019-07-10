@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphAllPairsShortestPaths", "GraphAllPairsShortestPaths\GraphAllPairsShortestPaths.csproj", "{07233219-6A16-44ED-8350-32CC2907DCC3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07233219-6A16-44ED-8350-32CC2907DCC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07233219-6A16-44ED-8350-32CC2907DCC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07233219-6A16-44ED-8350-32CC2907DCC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07233219-6A16-44ED-8350-32CC2907DCC3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4952ED18-69C9-43EB-8D30-FDFAD0307C72}
+	EndGlobalSection
+EndGlobal
