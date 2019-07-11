@@ -17,19 +17,21 @@ namespace GraphAllPairsShortestPaths
         static void Main(string[] args)
         {
             Graph graph = ReadFileWithAdjacencyMatrix("input.txt");
-            int[,] matrix = graph.FasterAllPairsShortestPaths();
+            graph.ShortestSimpleCycleSearch();
+
+            //int[,] matrix = graph.FasterAllPairsShortestPaths();
             //int[,] matrix = graph.FloydWarshall();
 
-            StringBuilder output = new StringBuilder();
-            for (int i = 0; i < graph.Size; i++)
-            {
-                for (int j = 0; j < graph.Size; j++)
-                {
-                    output.Append(matrix[i, j] + " ");
-                }
-                output.Append("\n");
-            }
-            Console.WriteLine(output);
+            //StringBuilder output = new StringBuilder();
+            //for (int i = 0; i < graph.Size; i++)
+            //{
+            //    for (int j = 0; j < graph.Size; j++)
+            //    {
+            //        output.Append(matrix[i, j] + " ");
+            //    }
+            //    output.Append("\n");
+            //}
+            //Console.WriteLine(output);
         }
 
         private static Graph ReadFileWithAdjacencyMatrix(string fileName)

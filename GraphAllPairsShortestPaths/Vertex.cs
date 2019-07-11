@@ -11,19 +11,16 @@ namespace GraphAllPairsShortestPaths
         public int Index;
         public int Distance;
         public Vertex Parent;
+        public int ParentWeight;
 
         public bool Discovered;
-        public int DiscoveryTime;
-        public int FinishingTime;
-
-        public List<IncidentEdge> AdjacencyList;
+        public bool Color;
 
         public Vertex(int index)
         {
             Index = index;
             Parent = null;
             Distance = int.MaxValue;
-            AdjacencyList = new List<IncidentEdge>();
         }
     }
 }
