@@ -92,22 +92,51 @@ namespace GraphAllPairsShortestPaths
             int[,] matrix = AdjacencyMatrix;
             for (int k = 0; k < Size; k++)
             {
-                int[,] curMatrix = new int[Size, Size];
+                //int[,] curMatrix = new int[Size, Size];
                 for (int i = 0; i < Size; i++)
                 {
                     for (int j = 0; j < Size; j++)
                     {
                         if (matrix[i, j] < matrix[i, k] + matrix[k, j] || matrix[i, k] == int.MaxValue || matrix[k, j] == int.MaxValue)
-                            curMatrix[i, j] = matrix[i, j];
+                            matrix[i, j] = matrix[i, j];//curMatrix[i, j] = matrix[i, j];
                         else
-                            curMatrix[i, j] = matrix[i, k] + matrix[k, j];
+                            matrix[i, j] = matrix[i, k] + matrix[k, j];//curMatrix[i, j] = matrix[i, k] + matrix[k, j];
                     }
                 }
-                matrix = (int[,])curMatrix.Clone();
+                //matrix = (int[,])curMatrix.Clone();
             }
 
             return matrix;
         }
+
+        public void TransitiveClosure()
+        {
+            bool[,] matrix = new bool[Size, Size];
+            for (int i = 0; i < Size; i++)
+            {
+                for (int j = 0; j < Size; j++)
+                {
+                    if (i == j || AdjacencyMatrix[i, j] != int.MaxValue)
+                        matrix[i, j] = true;
+                    else
+                        matrix[i, j] = false;
+                }
+            }
+
+            for (int k = 0; k < Size; k++)
+            {
+                //bool[,] curMatrix = new bool[Size, Size];
+                for (int i = 0; i < Size; i++)
+                {
+                    for (int j = 0; j < Size; j++)
+                    {
+                        matrix[i, j] = matrix[i, j] || matrix[i, k] && matrix[k, j];
+                    }
+                }
+                //matrix = (bool[,])curMatrix.Clone();
+            }
+        }
+
 
         public bool Relax(Vertex incidentFrom, Vertex incidentTo, int weight)
         {
@@ -239,6 +268,10 @@ namespace GraphAllPairsShortestPaths
 
         /// <summary>
         /// Поиск кратчайшего простого цикла в графе. Сложность 0()
+        /// Перебор всех возможных циклов в графе со следующим ограничением:
+        /// цикл может проходить через одну и ту же вершину только один раз.
+        /// При переборе сравниваем длину каждого цикла с самым минимальным циклом,
+        /// и если он а меньше, то делаем самым минимальным текущий цикл.
         /// </summary>
         public void ShortestSimpleCycleSearch()
         {
