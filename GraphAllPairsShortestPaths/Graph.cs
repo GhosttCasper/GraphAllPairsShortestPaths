@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,16 +12,18 @@ namespace GraphAllPairsShortestPaths
 {
     class Graph
     {
-        public List<Vertex> VerticesList = new List<Vertex>();
-        public int[,] AdjacencyMatrix;
-        public int Size;
-        public int MinCycleLength = int.MaxValue;
-        public Stack<Vertex> MinCycle = new Stack<Vertex>();
+        private List<Vertex> VerticesList;
+        private int[,] AdjacencyMatrix; //{ get; set; }
+        public int Size { get; }
+
+        private int MinCycleLength = int.MaxValue;
+        private Stack<Vertex> MinCycle = new Stack<Vertex>();
 
         public Graph(int size, string[] strs)
         {
             Size = size;
             AdjacencyMatrix = new int[Size, Size];
+            VerticesList = new List<Vertex>(Size);
             for (int i = 1; i <= Size; i++)
                 VerticesList.Add(new Vertex(i));
 
@@ -47,7 +49,7 @@ namespace GraphAllPairsShortestPaths
             }
         }
 
-        public int[,] ExtendShortestPaths(int[,] firstMatrix, int[,] secondMatrix)
+        private int[,] ExtendShortestPaths(int[,] firstMatrix, int[,] secondMatrix)
         {
             int[,] curMatrix = new int[Size, Size];
             for (int i = 0; i < Size; i++)
@@ -138,7 +140,7 @@ namespace GraphAllPairsShortestPaths
         }
 
 
-        public bool Relax(Vertex incidentFrom, Vertex incidentTo, int weight)
+        private bool Relax(Vertex incidentFrom, Vertex incidentTo, int weight)
         {
             if (incidentTo.Distance > incidentFrom.Distance + weight && incidentFrom.Distance != int.MaxValue)
             {
@@ -150,7 +152,7 @@ namespace GraphAllPairsShortestPaths
             return false;
         }
 
-        public void InitializeSingleSource(Vertex source)
+        private void InitializeSingleSource(Vertex source)
         {
             foreach (var vertex in VerticesList)
             {
@@ -169,13 +171,13 @@ namespace GraphAllPairsShortestPaths
         {
             InitializeSingleSource(source);
 
-            List<Vertex> discoveredVertices = new List<Vertex>();
+            //List<Vertex> discoveredVertices = new List<Vertex>();
             List<Vertex> verticesToAddInTree = new List<Vertex>(VerticesList);
 
             while (verticesToAddInTree.Count != 0)
             {
                 Vertex curVertex = ExtractMin(verticesToAddInTree);
-                discoveredVertices.Add(curVertex);
+                //discoveredVertices.Add(curVertex);
                 int i = curVertex.Index - 1;
 
                 for (int j = 0; j < Size; j++)
@@ -273,7 +275,7 @@ namespace GraphAllPairsShortestPaths
         /// При переборе сравниваем длину каждого цикла с самым минимальным циклом,
         /// и если он а меньше, то делаем самым минимальным текущий цикл.
         /// </summary>
-        public void ShortestSimpleCycleSearch()
+        public string ShortestSimpleCycleSearch()
         {
             DepthFirstSearch();
 
@@ -284,7 +286,37 @@ namespace GraphAllPairsShortestPaths
                 output.Append(vertex.Index + " ");
             }
             Console.WriteLine(output);
+
+            return output.ToString();
         }
 
+        public void SaveTxtFormatGraph(string graphFile)
+        {
+            using (StreamWriter writer = new StreamWriter(graphFile))
+            {
+                writer.WriteLine(Size);
+                writer.WriteLine(ToTxtFile());
+            }
+        }
+
+        public string ToTxtFile()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < Size; ++i)
+            {
+                for (int j = 0; j < Size; j++)
+                {
+                    if (AdjacencyMatrix[i, j] != int.MaxValue)
+                    {
+                        sb.Append(i + 1 + " ");
+                        sb.Append(j + 1 + " ");
+                        sb.Append(AdjacencyMatrix[i, j]);
+                        sb.Append(Environment.NewLine);
+                    }
+                }
+            }
+
+            return sb.ToString();
+        }
     }
 }

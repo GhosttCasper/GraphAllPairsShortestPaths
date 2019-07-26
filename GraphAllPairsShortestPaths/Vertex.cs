@@ -8,13 +8,13 @@ namespace GraphAllPairsShortestPaths
 {
     public class Vertex
     {
-        public int Index;
-        public int Distance;
-        public Vertex Parent;
-        public int ParentWeight;
+        public int Index { get; }
+        public int Distance { get; set; }
+        public Vertex Parent { get; set; }
+        public int ParentWeight { get; set; }
 
-        public bool Discovered;
-        public bool Color;
+        public bool Discovered { get; set; }
+        public bool Color { get; set; }
 
         public Vertex(int index)
         {

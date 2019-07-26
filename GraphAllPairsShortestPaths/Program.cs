@@ -18,7 +18,13 @@ namespace GraphAllPairsShortestPaths
         static void Main(string[] args)
         {
             Graph graph = ReadFileWithAdjacencyMatrix("input.txt");
-            graph.ShortestSimpleCycleSearch();
+            string result = graph.ShortestSimpleCycleSearch();
+
+            if (string.IsNullOrEmpty(result))
+                WriteFile(result, "output.txt");
+
+            string outputGraphFile = "..\\..\\output.txt";
+            graph.SaveTxtFormatGraph(outputGraphFile);
 
             //int[,] matrix = graph.FasterAllPairsShortestPaths();
             //int[,] matrix = graph.FloydWarshall();
@@ -33,6 +39,14 @@ namespace GraphAllPairsShortestPaths
             //    output.Append("\n");
             //}
             //Console.WriteLine(output);
+        }
+
+        private static void WriteFile(string result, string fileName)
+        {
+            using (StreamWriter writer = new StreamWriter(fileName))
+            {
+                writer.WriteLine(result);
+            }
         }
 
         private static Graph ReadFileWithAdjacencyMatrix(string fileName)
